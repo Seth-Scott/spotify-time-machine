@@ -1,16 +1,16 @@
-# This is a sample Python script.
+import requests
+from bs4 import BeautifulSoup
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+YEAR = input("What year do you want to time travel to? Type the date in this format YYYY-MM-DD: ")
+URL = f"https://www.billboard.com/charts/hot-100/{YEAR}/"
+response = requests.get(url=URL)
+website = response.text
+
+soup = BeautifulSoup(website, "html.parser")
+songs = soup.findAll(name="h3", class_='c-title a-no-trucate a-font-primary-bold-s u-letter-spacing-0021 lrv-u-font-size-18@tablet lrv-u-font-size-16 u-line-height-125 u-line-height-normal@mobile-max a-truncate-ellipsis u-max-width-330 u-max-width-230@tablet-only')
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+song_list = [song.getText().strip() for song in songs]
+print(song_list)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
